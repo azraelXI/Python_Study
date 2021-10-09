@@ -15,13 +15,13 @@ data = {
 
 
 # 领取任务
-Taskid = {4, 7, 13, 24}
-for id in Taskid:
-    taskurl = f"http://www.9dmdamaomod.net/home.php?mod=task&do=view&id={id}"
-    task_resp = requests.get(taskurl, headers=headers, data=data)
-    #print(task_resp.text)
-    task_resp.close()
-    time.sleep(1)
+# Taskid = {4, 7, 13, 24}
+# for id in Taskid:
+#     taskurl = f"http://www.9dmdamaomod.net/home.php?mod=task&do=view&id={id}"
+#     task_resp = requests.get(taskurl, headers=headers, data=data)
+#     #print(task_resp.text)
+#     task_resp.close()
+#     time.sleep(1)
 # 固定回复
 replyurl = {"155106", "156809", "179616"}
 for reply in replyurl:
