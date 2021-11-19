@@ -14,8 +14,6 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",
     "Cookie" : "aU84_ef4f_saltkey=PaKOTOLP; aU84_ef4f_lastvisit=1632357670; aU84_ef4f_auth=3292cE0KVx5xi0vsIBLP07tz1fpCiv5XZHRYEy%2B%2Bbc%2FOn2z7Q61mCIApq9yprIuyjxgq4H%2FS6OjDJmdVG1%2FQm7zJ0a4f; aU84_ef4f_lastcheckfeed=1520685%7C1632361281; aU84_ef4f_connect_is_bind=0; aU84_ef4f_nofavfid=1; aU84_ef4f_smile=1D1; aU84_ef4f_taskdoing_1520685=1; aU84_ef4f_visitedfid=365D76D65D40; aU84_ef4f_st_t=1520685%7C1632797455%7Ccf6a31c1a31c04922c3034345c3c6368; aU84_ef4f_forum_lastvisit=D_76_1632706993D_365_1632797455; aU84_ef4f_viewid=tid_228065; aU84_ef4f_ulastactivity=1632798621%7C0; aU84_ef4f_sendmail=1; aU84_ef4f_noticeTitle=1; aU84_ef4f_st_p=1520685%7C1632798783%7Ccfda4d355f317a8342ade4565276c168; aU84_ef4f_checkpm=1; aU84_ef4f_lastrequest=74d2p%2FNBiAOKBvfOoS%2FWUJHkMnX18s%2BE7f59HGevB5wGRj6wzbUF; aU84_ef4f_lastact=1632798813%09forum.php%09ajax"
 }
-global errorNum
-errorNum = 0
 def SumAddAns():
     Sum = 0
     Question_text = web.find_element(By.XPATH, '/html/body/form/table/tbody/tr/td/table/tbody/tr/td/b')
@@ -34,6 +32,7 @@ def SumAddAns():
     AnsBtn.click()
 
 def Login():
+    time.sleep(5)
     userNameText = web.find_element(By.XPATH, '/html/body/div[11]/div/div/div/div[2]/div/div[2]/div[1]/div[1]/form/div/div[1]/table/tbody/tr/td[1]/input')
     userPassText = web.find_element(By.XPATH, '/html/body/div[11]/div/div/div/div[2]/div/div[2]/div[1]/div[1]/form/div/div[2]/table/tbody/tr/td[1]/input')
     Code = web.find_element(By.XPATH, '/html/body/div[11]/div/div/div/div[2]/div/div[2]/div[1]/div[1]/form/div/span/div/table/tbody/tr/td/input')
@@ -47,36 +46,68 @@ def Login():
     time.sleep(5)
 
 def Task():
-    web.get(url_task)
-
+    for i in range(0, 3):
+        web.get(url_task)
+        try:
+            TaskBtn = web.find_element(By.XPATH, "/html/body/div[10]/div/div/div[2]/div[1]/div/div/table/tbody/tr[3]/td[4]/a/img")
+            TaskBtn.click()
+            time.sleep(1)
+            TaskBtn = web.find_element(By.XPATH,"/html/body/div[10]/div/div/div[2]/div[1]/div/div/table/tbody/tr[4]/td[4]/a/img")
+            TaskBtn.click()
+            time.sleep(1)
+            TaskBtn = web.find_element(By.XPATH,"/html/body/div[10]/div/div/div[2]/div[1]/div/div/table/tbody/tr[5]/td[4]/a/img")
+            TaskBtn.click()
+            time.sleep(1)
+        except:
+            print("已经领取所有任务", i)
+    print("领取任务完成")
+    Report("http://www.9dmdamaomod.net/thread-156809-1-1.html")
+    Report("http://www.9dmdamaomod.net/thread-231010-1-1.html")
 def MainPage():
-    for i in range(2, 80):
+    for i in range(3, 80):
         web.get(url_main)
         if i > 40:
             ActionChains(web).key_down(Keys.END).key_up(Keys.END).perform()
-        time.sleep(16)
+        time.sleep(5)
         try:
             elements = web.find_element(By.XPATH, f'/html/body/div[11]/div/div/div[4]/div/div/div[4]/div[2]/form/ul/li[{i}]')
             elements.click()
+            time.sleep(8)
+            ActionChains(web).key_down(Keys.END).key_up(Keys.END).perform()
+            time.sleep(2)
             Textimput = web.find_element(By.XPATH, '/html/body/div[11]/div/div/div[4]/div[2]/div[1]/table/tbody/tr[1]/td[2]/div[2]/div/div[1]/form/div[1]/table/tbody/tr/td[2]/input')
             Textimput.clear()
             Textimput.send_keys(MessageList[random.randint(0, 6)])
             messBtn = web.find_element(By.XPATH, '/html/body/div[11]/div/div/div[4]/div[2]/div[1]/table/tbody/tr[1]/td[2]/div[2]/div/div[1]/form/div[1]/table/tbody/tr/td[4]/button')
             messBtn.click()
+            time.sleep(1)
+            print(i, "发送回复完成")
         except:
-            errorNum += 1
-            print("加载页面太慢，停止加载，继续下一步操作")
+            print("加载页面太慢，停止加载，继续下一步操作 此页面为：", i)
+        print(i, "完成")
+def Report(Url):
+    web.get(Url)
+    time.sleep(15)
+    try:
+        Textimput = web.find_element(By.XPATH, '/html/body/div[11]/div/div/div[4]/div[2]/div[1]/table/tbody/tr[1]/td[2]/div[2]/div/div[1]/form/div[1]/table/tbody/tr/td[2]/input')
+        Textimput.clear()
+        Textimput.send_keys(MessageList[random.randint(0, 6)])
+        messBtn = web.find_element(By.XPATH, '/html/body/div[11]/div/div/div[4]/div[2]/div[1]/table/tbody/tr[1]/td[2]/div[2]/div/div[1]/form/div[1]/table/tbody/tr/td[4]/button')
+        messBtn.click()
+    except:
+        print("加载页面太慢，停止加载，继续下一步操作")
+    print("Report完成")
 
 if __name__ == '__main__':
     opt = Options()
     # opt.add_argument('--headless')
     # opt.add_argument('--disable-gpu')
     web = Chrome(options=opt)
-    # web.get('http://www.9dmdamaomod.net/member.php?mod=logging&action=login')
-    web.get(url_main)
+    web.get('http://www.9dmdamaomod.net/member.php?mod=logging&action=login')
     time.sleep(2)
     SumAddAns()
     Login()
-    # Task()
+    Task()
     MainPage()
-    print("全部完成,异常页面数量为：", errorNum)
+    web.close()
+    print("全部完成")
