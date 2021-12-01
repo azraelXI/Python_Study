@@ -61,8 +61,6 @@ def Task():
         except:
             print("已经领取所有任务", i)
     print("领取任务完成")
-    Report("http://www.9dmdamaomod.net/thread-156809-1-1.html")
-    Report("http://www.9dmdamaomod.net/thread-231010-1-1.html")
 def MainPage():
     for i in range(3, 80):
         web.get(url_main)
@@ -72,9 +70,9 @@ def MainPage():
         try:
             elements = web.find_element(By.XPATH, f'/html/body/div[11]/div/div/div[4]/div/div/div[4]/div[2]/form/ul/li[{i}]')
             elements.click()
-            time.sleep(8)
-            ActionChains(web).key_down(Keys.END).key_up(Keys.END).perform()
             time.sleep(3)
+            ActionChains(web).key_down(Keys.END).key_up(Keys.END).perform()
+            time.sleep(8)
             Textimput = web.find_element(By.XPATH, '/html/body/div[11]/div/div/div[4]/div[2]/div[1]/table/tbody/tr[1]/td[2]/div[2]/div/div[1]/form/div[1]/table/tbody/tr/td[2]/input')
             Textimput.clear()
             Textimput.send_keys(MessageList[random.randint(0, 6)])
@@ -97,20 +95,23 @@ def Report(Url):
         messBtn = web.find_element(By.XPATH, '/html/body/div[11]/div/div/div[4]/div[2]/div[1]/table/tbody/tr[1]/td[2]/div[2]/div/div[1]/form/div[1]/table/tbody/tr/td[4]/button')
         messBtn.click()
         time.sleep(1)
+        print("Report完成")
     except:
         print("加载页面太慢，停止加载，继续下一步操作")
-    print("Report完成")
+        Report(Url)
 
 if __name__ == '__main__':
     opt = Options()
     # opt.add_argument('--headless')
-    # opt.add_argument('--disable-gpu')
     web = Chrome(options=opt)
     web.get('http://www.9dmdamaomod.net/member.php?mod=logging&action=login')
     time.sleep(2)
     SumAddAns()
     Login()
-    Task()
+    # Task()
+    Report("http://www.9dmdamaomod.net/thread-155106-1-1.html")
+    Report("http://www.9dmdamaomod.net/thread-156809-1-1.html")
+    Report("http://www.9dmdamaomod.net/thread-231010-1-1.html")
     MainPage()
     web.close()
     print("全部完成")
