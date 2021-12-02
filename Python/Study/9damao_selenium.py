@@ -99,7 +99,30 @@ def Report(Url):
     except:
         print("加载页面太慢，停止加载，继续下一步操作")
         Report(Url)
-
+def Access(Url):
+    web.get(Url)
+    time.sleep(3)
+    Mainhandle = web.current_window_handle#主页面的句柄
+    try:
+        for id in range(1, 10):
+            Player = web.find_element(By.XPATH, f'/html/body/div[11]/div/div/div[4]/div[2]/div[{id}]/table/tbody/tr[1]/td[1]/div/div[3]/div/a/img')
+            Player.click()
+            time.sleep(1)
+        handles = web.window_handles
+        for newhandle in handles:
+            if(newhandle != Mainhandle):
+                web.switch_to.window(newhandle)
+                acc = web.find_element(By.XPATH, '/html/body/div[6]/div/div/div[1]/div[1]/div[2]/div/ul/li[4]/a')
+                acc.click()
+                time.sleep(1)
+                btn = web.find_element(By.XPATH, '/html/body/div[1]/div/table/tbody/tr[2]/td[2]/form/p/button')
+                btn.click()
+                web.close()
+                print("打招呼完成")
+    except:
+        pass
+    web.switch_to.window(Mainhandle)
+    time.sleep(1)
 if __name__ == '__main__':
     opt = Options()
     # opt.add_argument('--headless')
@@ -113,5 +136,6 @@ if __name__ == '__main__':
     Report("http://www.9dmdamaomod.net/thread-156809-1-1.html")
     Report("http://www.9dmdamaomod.net/thread-231010-1-1.html")
     MainPage()
+    Access("http://www.9dmdamaomod.net/thread-155106-1-1.html")
     web.close()
     print("全部完成")
